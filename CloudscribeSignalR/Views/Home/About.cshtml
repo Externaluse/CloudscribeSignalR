@@ -3,9 +3,62 @@
 }
 <h2>@ViewData["Title"].</h2>
 <h3>@ViewData["Message"]</h3>
+<p><input type="button" name="callApiNotifyAllButMe" id="callApiNotifyAllButMe" value="Call Api and notify all but me"/></p>
+<p id="callApiNotifyAllButMeResult"></p>
+<p><input type="button" name="callApiNotifyAll" id="callApiNotifyAll" value="Call Api and notify all, but only for 1 sec (set in sendAsync(object, duration) in Homecontroller:About()"/></p>
+<p id="callApiNotifyAllResult"></p>
+<p><input type="button" name="callApiNotifyOnlyMe" id="callApiNotifyOnlyMe" value="Call Api and notify only me"/></p>
+<p id="callApiNotifyOnlyMeResult"></p>
+<p><input type="button" name="callApiCreateDesktopNotice" id="callApiCreateDesktopNotice" value="Call Api and show a Desktop Notice" /> (Implements the <a href="http://www.w3.org/TR/notifications/">Web Notifications spec.</a></p>
+<p id="callApiCreateDesktopNoticeResult"></p>
 
-<p>Use this area to provide additional information.</p>
 @section scripts {
+    <script type="text/javascript">
+        // create the clicky stuff seperately
+        $(function () {
+            $("#callApiNotifyAllButMe").click(function(){
+                $.ajax({
+                    url: "/api/ApiExampleMethod",
+                    data: "notify=butme"
+                }).done(function(data) {
+                    $('#callApiNotifyAllButMeResult').text("/api/ApiExampleMethod returned ID:" + data.id + " and text: " + data.name);
+                    }).error(function(e) {
+                    console.log("error" + e);
+                });
+            });
+            $("#callApiNotifyOnlyMe").click(function () {
+                $.ajax({
+                    url: "/api/ApiExampleMethod",
+                    data: "notify=onlyme"
+                }).done(function(data) {
+                    $('#callApiNotifyOnlyMeResult').text("/api/ApiExampleMethod returned ID:" + data.id + " and text: " + data.name);
+                    }).error(function(e) {
+                    console.log("error" + e);
+                });
+            });
+            $("#callApiNotifyAll").click(function () {
+                $.ajax({
+                    url: "/api/ApiExampleMethod",
+                    data: "notify=all"
+                }).done(function(data) {
+                    $('#callApiNotifyAllResult').text("/api/ApiExampleMethod returned ID:" + data.id + " and text: " + data.name);
+                    }).error(function(e) {
+                    console.log("error" + e);
+                });
+            });
+            $("#callApiCreateDesktopNotice").click(function () {
+                $.ajax({
+                    url: "/api/ApiExampleMethod",
+                    data: "notify=desktop"
+                }).done(function(data) {
+                    $('#callApiCreateDesktopNoticeResult').text("/api/ApiExampleMethod returned ID:" + data.id + " and text: " + data.name);
+                }).error(function(e) {
+                    console.log("error" + e);
+                });
+            });
+        });
+
+    </script>
     <script type="text/javascript">
         PNotify.prototype.options.styling = "bootstrap3";
         var PnotifyAnimate_in = "rollIn", PnotifyAnimate_out = "fadeOutDown";
@@ -13,7 +66,7 @@
         var connection = null;
         // myOwnID to deduplicate calls from this client
         var myIdentification;
-        // is a notification currently displayed? Used to suppress additional dialogues
+        // is a confirm notification currently displayed? Used to suppress additional dialogues
         var notificationDisplayed = false;
 
         let connectionLogLevel = signalR.LogLevel.Information;
@@ -94,8 +147,7 @@
                 text: !("text" in objMessage) ? "No Text" : objMessage.text,
                 icon: "glyphicon glyphicon-envelope",
                 type: "info",
-                //delay: duration * 100,
-                delay: 1000,
+                delay: Number.isInteger(duration) ? duration * 1000 : 2000,
                 nonblock: {
                     nonblock: true
                 },
@@ -109,13 +161,45 @@
                 }
             }));
         });
+        connection.on("NotifyDesktop", (objMessage, duration) => {
+            objMessage = jQuery.parseJSON(objMessage);
+            var permission = (PNotify.desktop.permission());
+            var notice = (new PNotify({
+                title: !("title" in objMessage) ? "No Title" : objMessage.title,
+                text: !("text" in objMessage) ? "No Text" : objMessage.text,
+                desktop: {
+                    desktop: true
+                }/*,
+                icon: "glyphicon glyphicon-envelope",
+                type: "info",
+                delay: Number.isInteger(duration) ? duration * 1000 : 2000,
+                nonblock: {
+                    nonblock: true
+                },
+                animate: {
+                    animate: true,
+                    in_class: PnotifyAnimate_in,
+                    out_class: PnotifyAnimate_out
+                },
+                after_init: function (notice) {
+                    notice.attention('pulse');
+                }*/
+            }));
+            notice.get().click(function(e) {
+                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
+                alert('Hey! You clicked the desktop notification!');
+            });
+            setTimeout(function() {
+                notice.update({
+                    type: "info",
+                    text: "Now I'm an info box!"
+                });
+            }, 4000);
+        });
         connection.start().then(() => {
             console.log("Connection started");            
         }).catch(exception => {
             console.log("Error connecting", exception, connection);
         });
- </script>
-}
-
     </script>
 }

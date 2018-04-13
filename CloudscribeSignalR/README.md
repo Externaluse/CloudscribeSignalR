@@ -64,3 +64,9 @@ Just to make you a part of my life: I have typed the code in 6) above, but only 
 - The `Identification()` method sends the user's Guid back to the browser, so that we can access that later to choose if we want to display or ignore certain messages sent to "All"
 - To demonstrate, I have decorated the About() method in the Home Controller with Authorize, and we'll wire the JS directly into the view's scripts section. We could obviously re-use the connection handling stuff, but to keep it simple I'll just wire up a basic hub connection in Views/Home/About.cshtml
 - might be a good time to get another coffee and commit what we have so far.
+13) This is technically not step 13, but I lost track of where I was. So let's see where we are:
+ - navigate to /Home/about. You should get an Auth Challenge; login as admin@admin.com / admin
+ - Looking at the browser's console, we should see both heartbeat and signalr endpoint connecting. 
+ - You'll find a few buttons there, which in text and code should be self-explanatory.
+ - Towards Monday 13/04/18 I'll try to add a confirmation dialogue and a few other bits and pieces. So much for now; feel free to file issues if I wasn't clear or if you've got way more brilliant solutions to achieve the same.
+ - I haven't bothered with any programming principles here (the main reason being that I'm an amateur programmer anyway, and if ok in PHP I'm at the very beginner's level in C#/Core), so copy&paste and quick and dirty it is all the way. There should be something left for you to do, but please feel free to contribute. 
