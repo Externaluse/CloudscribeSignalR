@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Threading;
+using cloudscribe.Core.Models;
+using CloudscribeSignalR.Controllers;
+using Microsoft.AspNetCore.SignalR;
 
 
 namespace CloudscribeSignalR
@@ -63,13 +67,14 @@ namespace CloudscribeSignalR
             // This is a custom extension method in Config/RoutingAndMvc.cs
             services.SetupMvc(SslIsAvailable);
 
-
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app, 
             IHostingEnvironment env,
+            IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory,
             IOptions<cloudscribe.Core.Models.MultiTenantOptions> multiTenantOptionsAccessor,
             IOptions<RequestLocalizationOptions> localizationOptionsAccessor
@@ -100,6 +105,15 @@ namespace CloudscribeSignalR
                     multiTenantOptions,
                     SslIsAvailable);
 
+            // Add SignalR Endpoints. Be sure to add them after app.UseCloudscribeCore if you require Authorization information; the order of middleware is important
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<SignalRHeartbeat>("/heartbeat");
+                routes.MapHub<SignalRHub>("/signalr");
+            });
+            // Start a heartbeat timer to the clients
+            TimerCallback signalRHeartBeat = async (x) => { await serviceProvider.GetService<IHubContext<SignalRHeartbeat>>().Clients.All.SendAsync("Heartbeat", DateTime.Now); };
+            var timer = new Timer(signalRHeartBeat).Change(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(30));
 
             app.UseMvc(routes =>
             {

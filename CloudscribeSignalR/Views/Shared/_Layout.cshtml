@@ -16,6 +16,7 @@
 	<environment names="Development">
         <link rel="stylesheet" href="~/cssmin/themes/default/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/pnotify/pnotify.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/cssmin/themes/default/bootstrap.min.css"  />
@@ -50,15 +51,17 @@
         <footer class="container text-center">
             <small>Copyright &copy; @DateTime.Now.Year - @(Tenant?.SiteName ?? "Sample")</small><br />
             <small>
-            @* you are free to remove the powered by cloudscribe link but we appreciate it if you choose to keep it! *@
-            <a target="_blank" href="https://www.cloudscribe.com/?utm_source=@Context.Request.Host.Value&amp;utm_medium=referral&amp;utm_campaign=poweredbycloudscribe">Powered by cloudscribe</a>
-            </small>   
+                @* you are free to remove the powered by cloudscribe link but we appreciate it if you choose to keep it! *@
+                <a target="_blank" href="https://www.cloudscribe.com/?utm_source=@Context.Request.Host.Value&amp;utm_medium=referral&amp;utm_campaign=poweredbycloudscribe">Powered by cloudscribe</a>
+            </small>
         </footer>
     </div>
     <environment names="Development">
         <script src="~/js/jquery.js"></script>
         <script src="~/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/pnotify/pnotify.js"></script>
+        <script src="~/lib/signalr/signalr.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -73,6 +76,7 @@
     </environment>
     @RenderSection("Bottom", required: false)
     @RenderSection("scripts", required: false)
+    @await Html.PartialAsync("_signalRHeartbeat")
     <add-this profile-id="@Tenant.AddThisDotComUsername" async></add-this>
 </body>
 </html>

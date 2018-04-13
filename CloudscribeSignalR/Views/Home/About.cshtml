@@ -5,3 +5,117 @@
 <h3>@ViewData["Message"]</h3>
 
 <p>Use this area to provide additional information.</p>
+@section scripts {
+    <script type="text/javascript">
+        PNotify.prototype.options.styling = "bootstrap3";
+        var PnotifyAnimate_in = "rollIn", PnotifyAnimate_out = "fadeOutDown";
+        // keeps the connection object
+        var connection = null;
+        // myOwnID to deduplicate calls from this client
+        var myIdentification;
+        // is a notification currently displayed? Used to suppress additional dialogues
+        var notificationDisplayed = false;
+
+        let connectionLogLevel = signalR.LogLevel.Information;
+        connection = new signalR.HubConnection("/signalr", {logger: connectionLogLevel, transport: signalR.TransportType.ServerSentEvents });
+        connection.on("Identification",
+            userId => {
+                console.log("signalrOnIdentification: "+userId);
+                myIdentification = userId;
+            });
+        connection.on("NotifyConfirm",
+            callerIdentification => {
+                console.log("signalR-OnNotification");
+                if (callerIdentification == myIdentification) {
+                    console.log("suppressed notificationDisplayed");
+                } else if (notificationDisplayed) {
+                    console.log("suppressed notificationDisplayed; already open");
+                } else {
+                    notificationDisplayed = true;
+                    (new PNotify({
+                        title: "Data has changed or somehing like that!",
+                        text:
+                            "Data has been changed - and it wasn't you! Fetch the fresh stuff?",
+                        icon: "glyphicon glyphicon-question-sign",
+                        hide: false,
+                        confirm: {
+                            confirm: true
+                        },
+                        buttons: {
+                            closer: false,
+                            sticker: false
+                        },
+                        history: {
+                            history: false
+                        },
+                        animate: {
+                            animate: true,
+                            in_class: PnotifyAnimate_in,
+                            out_class: PnotifyAnimate_out
+                        },
+                        after_init: function (notice) {
+                            notice.attention('pulse');
+                        }
+                    })).get().on('pnotify.confirm', function ()
+                    {
+                        alert("confirmed");
+                        notificationDisplayed = false;
+                    }).on('pnotify.cancel', function (event, notice)
+                    {
+                        notificationDisplayed = false;
+                        notice.update({
+                            type: "error",
+                            title: "Sure, why not cancel",
+                            text: "Don't cry if you don't have the latest stuff though.",
+                            delay: 2000,
+                            confirm: {
+                                confirm: false
+                            }
+                        });
+                        notice.attention('swing');
+                        notice.queueRemove();
+                        return false;
+                    });
+                }
+            });
+
+        connection.onclose(e => {
+            if (e) {
+                console.log('Connection closed with error: ' + e);
+            } else {
+                console.log('Disconnected (properly)');
+            }
+        });
+        // let's get a json object to play and configure some of pnotify using it
+        connection.on("Notify", (objMessage, duration) => {
+            objMessage = jQuery.parseJSON(objMessage);
+            (new PNotify({
+                title: !("title" in objMessage) ? "No Title" : objMessage.title,
+                text: !("text" in objMessage) ? "No Text" : objMessage.text,
+                icon: "glyphicon glyphicon-envelope",
+                type: "info",
+                //delay: duration * 100,
+                delay: 1000,
+                nonblock: {
+                    nonblock: true
+                },
+                animate: {
+                    animate: true,
+                    in_class: PnotifyAnimate_in,
+                    out_class: PnotifyAnimate_out
+                },
+                after_init: function (notice) {
+                    notice.attention('pulse');
+                }
+            }));
+        });
+        connection.start().then(() => {
+            console.log("Connection started");            
+        }).catch(exception => {
+            console.log("Error connecting", exception, connection);
+        });
+ </script>
+}
+
+    </script>
+}

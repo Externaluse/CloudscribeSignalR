@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /CloudscribeSignalR/dp_keys/key-a41d3343-fcb9-4f9b-b31c-c58c1aacb639.xml
 /CloudscribeSignalR/nodb_storage/projects
+/CloudscribeSignalR/wwwroot/lib

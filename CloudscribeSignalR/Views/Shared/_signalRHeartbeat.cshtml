@@ -1,0 +1,82 @@
+﻿<script type="text/javascript">
+    var heartBeatConnection = null;
+    // stores the ID from SetInterval
+    var heartBeatTockTimer = 0;
+    // how often should I "tock" the server
+    var heartBeatTockTimerSeconds = 10;
+    // how often should I retry after connection loss?
+    var maxRetryAttempt = 5;
+    // the retry should wait less long then the TockTimer, or calls may overlap
+    var retryWaitSeconds = heartBeatTockTimerSeconds / 2;
+    // how many retry attempts did we have?
+    var currentRetryAttempt = 0;
+    // helper function to wait a few seconds
+    $.wait = function (miliseconds) {
+        var defer = $.Deferred();
+        setTimeout(function () { defer.resolve(); }, miliseconds);
+        return defer;
+    };
+    // this registers a timer heartBeatTockTimer to send something to the server every heartBeatTockTimerSeconds. If the connection fails, we'll attempt to reconnect
+    function registerHeartBeatTockTimer() {
+        // make sure we're registered once
+        if (heartBeatTockTimer !== 0)
+            return;
+        console.log("Registering registerHeartBeatTockTimer");
+        if (heartBeatConnection !== null)
+            heartBeatTockTimer = setInterval(sendHeartBeatTock, heartBeatTockTimerSeconds * 1000);
+        else
+            console.log("Connection was null; timer couldn't be registered");
+    }
+    // This is the method to invoke the server's HeartBeatTock method in the Heartbeat Hub
+    function sendHeartBeatTock() {
+        console.log("Standard attempt HeartBeatTock");
+        heartBeatConnection.invoke("HeartBeatTock").then(() => { console.log("HeartbeatTock worked.") }).catch(err => {
+            console.log("HeartbeatTock Standard Error", err);
+            $.wait(retryWaitSeconds * 1000).then(function () {
+                console.log("executing attempt #" + currentRetryAttempt.toString());
+                registerSignalRHeartbeat();
+            });
+            // success or give up?
+            console.log("Current retry attempt: ", currentRetryAttempt);
+        });
+    }
+    registerSignalRHeartbeat();
+
+    function registerSignalRHeartbeat() {
+        ++currentRetryAttempt;
+        if (currentRetryAttempt > maxRetryAttempt) {
+            console.log("Clearing registerHeartBeatTockTimer");
+            clearInterval(heartBeatTockTimer);
+            heartBeatTockTimer = 0;
+            throw "Retry attempts exceeded.";
+        }
+        if (heartBeatConnection !== null) {
+            console.log("registerSignalRConnection was not null", heartBeatConnection);
+            heartBeatConnection.stop().catch(err => console.log(err));
+        }
+        console.log("Creating new connection");
+        //new signalR.HubConnection("/signalr", { transport: signalR.TransportType.WebSockets }); //not working behind IIS Express, maybe change for release?
+        let connectionLogLevel = signalR.LogLevel.Information;
+        heartBeatConnection =
+            new signalR.HubConnection("/heartbeat", { logger: connectionLogLevel, transport: signalR.TransportType.ServerSentEvents });        
+        // register the function to be executed when the server calls SendAsync("Heartbeat")
+        heartBeatConnection.on("Heartbeat", serverTime => { console.log("HeartbeatTick: " + serverTime); });
+        
+        heartBeatConnection.onclose(e => {
+            if (e) {
+                console.log('Connection closed with error: ' + e);
+            } else {
+                console.log('Disconnected (properly)');
+            }
+        });
+
+        heartBeatConnection.start().then(() => {
+            console.log("Connection started, starting timer, resetting currentRetryAttempt.");
+            currentRetryAttempt = 0;
+            registerHeartBeatTockTimer();
+        }).catch(exception => {
+            console.log("Error connecting", exception, heartBeatConnection);
+        });
+    }
+
+</script>

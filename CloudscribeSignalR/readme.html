@@ -1,206 +1,99 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <title>cloudscribe New Project</title>
-    <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <title>Cloudscribe &amp; SignalR</title>
 </head>
 <body>
-    <div id="main" class="container body-content" role="main">
-   
-        <a href="https://www.cloudscribe.com?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">
-            <img alt="cloudscribe"
-                 class="img-responsive"
-                 src="https://www.cloudscribe.com/campaignimages/projectreadmeheader.png?utm_source=projecttemplate&amp;c=Offsite-Interactions&amp;a=Project-Created&amp;m=7&amp;d=4&amp;dl=newproject-nodb&amp;cb=24FA2353-A4BD-4E1F-96F5-BBAA43ED1DC4">
-        </a>
-        
-       
-        <section>
-            <h2>Thanks for starting your project with cloudscribe!</h2>
-            <p>Here are some informative tips to help you get started.</p>
-            
-            <p>We would really appreciate it if you would <a target="_blank" href="https://www.cloudscribe.com/account/register?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">Register on cloudscribe.com</a> 
-            if you haven't already, and be sure to checkout the <a target="_blank" href="https://www.cloudscribe.com/docs?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">Documentation</a>.
-            You can also ask questions in our <a target="_blank" href="https://gitter.im/joeaudette/cloudscribe">gitter chat web page</a>.</p>
-            <p>If you like cloudscribe and our Visual Studio project template, please give us a good review in 
-            <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=joeaudette.cloudscribeProjectTemplate">the Visual Studio Marketplace</a></p>
-            <p>Follow <a target="_blank" href="https://twitter.com/cloudscribeweb">@cloudscribeweb</a> and <a target="_blank" href="https://twitter.com/joeaudette">@joeaudette</a> on Twitter!</p>
 
-            <article>
-                <h3><span aria-hidden="true" class="fa fa-check"></span> Next Steps</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                            <strong>Update to the latest cloudscribe NuGet packages</strong> -
-                            It is always a good idea to use the latest cloudscribe NuGet packages.
-                            Right click the solution node and choose "Manage NuGet Packages for Solution", then check for any available updates.
-                    </li>
-                    <li class="list-group-item">
-                         <strong>Be aware of potential long file name errors on windows.</strong> 
-                        You chose NoDb file system storage for data storage. There is a known issue on windows that may potentially impact you. Just keep this in mind
-                        if you encounter any "path too long" exceptions.  Since NoDb uses long guids for file names and also for some folder names it can result in long file paths that may exceed the 255 character
-                        file path limit on windows. The best way to avoid that problem is to use a short folder path such as c:\c\yourprojectname, if you use a very deep 
-                        nested path you may encounter errors.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Login Credentials</strong> 
-                        When you first run the project application an administrative user account will be created automatically with the email admin@admin.com 
-                        and the password admin. Once you login with administrative permissions a new Administration menu will appear, you should take a look around 
-                        the various menu items to find the configurable settings that are of interest to you. One of the first things you should do is change the email
-                        address and password of the admin user account.  You can change the email under Administration > User Management > User List.
-						You can change the password by clicking the welcome user message at the top of the page. Be careful not to forget your password at least until
-						you have configured SMTP settings for email because password reset emails can't be sent until you do that.
-                        If you deploy the application to public facing web hosting be sure to change these credentials immediately after deployment.
-                        
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Data Protection</strong> 
-                        Be sure to see the comments in Startup.cs about data protection and how to configure the storage location of data protection keys.
-                        Data protection keys are used to encrypt some settings that are persisted to data storage such as the password for SMTP, and the "secrets" 
-                        for social authentication.
-                    </li>
-                    <li class="list-group-item">
-                         <strong>Configure SMTP Settings for email notifications</strong> 
-                         In order for certain features like password reset or requiring a confirmed email to work, your site needs to be able to send email notifications.
-                         You will find settings for this under Administration > Email Settings
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Build your own custom features</strong> 
-                        Now that your project is created, you likely have plans to write some code for the custom features you need. cloudscribe doesn't impose 
-                        any prescriptive requirements or patterns for how you build your own features, you can typically use any patterns and approaches
-                        that you would normally use in ASP.NET Core. But there is some guidance provided for getting the current user information and how to
-                        optionally implement multi-tenancy in your own features if you need that.
-                        See the <a href="https://www.cloudscribe.com/docs/building-custom-features-that-integrate-with-cloudscribe-core?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">Building Custom Features Documentation</a>
-                        for more information.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Create a Custom theme</strong> 
-                        There are a bunch of bootswatch themes included and you can choose the theme from a dropdown list under Administration > Site Settings after you login to your project.
-                        But more than likely you will want to create a custom theme.
-                        See the <a href="https://www.cloudscribe.com/docs/themes-and-web-design?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">Themes and Web Design</a>
-                        documentation for more information.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Configuration Sources</strong> 
-                        By default, the configuration system will let you override appsettings.json from appsettings.Development.json when the environment is Development.
-                        I would avoid putting any sensitive information directly in appsettings.json because you will likely want to include that file in source control.
-                        You can copy any settings from appsettings.json into appsettings.Development.json instead of putting anything sensitive in appsettings.json.
-                        I generally add appsettings.Development.json to my .gitignore file so that any connection strings or credentials I put there won't go into source control.
-                        It also supports overriding appsettings.json with appsettings.Production.json if the environment is Production. We don't include an
-                        appsettings.Production.json file in the template, I usually would create that file manually on the production server as part of my first deployment.
-                        For Azure hosting you would generally use Environment Variables or Azure Key Vault as discussed in the 
-                        <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration?tabs=basicconfiguration">official documentation</a>.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Google Analytics</strong> 
-                        There is built in support for google analytics, you just add your profile id under Administration > Site Settings.
-                        There is also tracking of account activities such as site registration and logins, including social login tracking.
-                        To get the most benefit from google analytics, see the <a href="https://www.cloudscribe.com/docs/google-analytics-integration?utm_source=projecttemplate&amp;utm_medium=referral&amp;utm_campaign=newproject-nodb">documentation</a>.
-                    </li>
-                    
-                </ul>
-            </article>
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Support cloudscribe by Buying Swag at Our CafePress Shop!</h2>
-                    <p>I've invested a lot of unpaid time and effort to make cloudscribe available and to keep improving it. 
-                        I really appreciate anything you can do to support my work, please help spread the word and encourage others to try
-                        cloudscribe, and if you can spare a few bucks for a t-shirt or a voluntary payment I would be grateful.</p>
-                    <p>See all the available merchandise on our <a href="http://www.cafepress.com/cloudscribe">CafePress shop!</a> 
-                    We make about $5 on each item and you can help us spread awareness of cloudscribe with our branded products.
-                    Only a few of our branded items are shown below.
-                    </p>
-                    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="http://www.cafepress.com/cloudscribe.81640156"><img src="https://www.cloudscribe.com/img/cloudscribewww_tshirt.jpg" /></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="http://www.cafepress.com/cloudscribe.81640151"><img src="https://www.cloudscribe.com/img/cloudscribewww_sweatshirt.jpg" /></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="http://www.cafepress.com/cloudscribe.81640150"><img src="https://www.cloudscribe.com/img/cloudscribe-mug-cp.png" /></a> 
-                </div>
-            </div>
-            
-			<div class="row">
-                <div class="col-md-12">
-                    <h2>Make a Voluntary Payment to Say Thanks!</h2>
-                    <div class="col-md-3 donate-button">
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="LRTXQVNQWWJWU">
-                            <table>
-                                <tr><td><input type="hidden" name="on0" value="Support My Work">Support My Work</td></tr>
-                                <tr>
-                                    <td>
-                                        <select name="os0">
-                                            <option value="Good will contribution">Good will contribution $25.00 USD</option>
-                                            <option value="I really benefited from your work">I really benefited from your work $50.00 USD</option>
-                                            <option value="I&#x27;m really getting a lot of value from your work!">I'm really getting a lot of value from your work! $100.00 USD</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
-                    </div>
-                    <div class="col-md-3 donate-button">
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="DHASFB2BGS5UY">
-                            <table>
-                                <tr><td><input type="hidden" name="on0" value="Beer Donation">Beer Donation</td></tr>
-                                <tr>
-                                    <td>
-                                        <select name="os0">
-                                            <option value="Buy Me a Pint of Beer!">Buy Me a Pint of Beer! $5.00 USD</option>
-                                            <option value="Buy Me a 6 Pack!">Buy Me a 6 Pack! $15.00 USD</option>
-                                            <option value="Buy Me a Case of Beer!">Buy Me a Case of Beer! $25.00 USD</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
-                    </div>
-                    <div class="col-md-3 donate-button">
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="AGPRQQBGPGKYN">
-                            <table>
-                                <tr><td><input type="hidden" name="on0" value="Coffee Donation">Coffee Donation</td></tr>
-                                <tr>
-                                    <td>
-                                        <select name="os0">
-                                            <option value="Buy Me a Cup of Coffee!">Buy Me a Cup of Coffee! $5.00 USD</option>
-                                            <option value="Buy Me Breakfast!">Buy Me Breakfast! $15.00 USD</option>
-                                            <option value="Buy Me a Week of Coffee!">Buy Me a Week of Coffee! $25.00 USD</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
+    <h1 id="cloudscribe-signalr">Cloudscribe &amp; SignalR</h1>
+<p>Playground for the amazing .NET Core Cloudscribe project template; today: integrating SignalR for notifcations using pnotify</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li>Cloudscribe (the .NET Core Identity/Multi-Tenancy/Simple Content/Blog/and so much more project template)
+<ul>
+<li><a href="https://github.com/cloudscribe">https://github.com/cloudscribe</a></li>
+<li><a href="https://gitter.im/joeaudette/cloudscribe">https://gitter.im/joeaudette/cloudscribe</a></li>
+<li><a href="https://www.cloudscribe.com/">https://www.cloudscribe.com/</a></li>
+</ul>
+</li>
+<li>SignalR
+<ul>
+<li><a href="https://github.com/aspnet/SignalR">https://github.com/aspnet/SignalR</a></li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>I found it relatively hard to get started with the all-new .Net Core vanilla-js SignalR library (beginner in C# and generally amateur programmer), but have to say the guys over at <a href="https://github.com/aspnet/SignalR">https://github.com/aspnet/SignalR</a> have done such an amazing job that it was worth the effort.</p>
+<p>This repository is more a test and playground for myself, but it may help others to get started quicker. I'll make a few notes about how I fared on particular tasks so you can:</p>
+<h2 id="follow-along">Follow along</h2>
+<p>Whilst trying to write a markdown README for Github, I looked for a Visual Studio-integrated editor and found <a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor#overview">a great one from Mads Kristensen</a>, that even supports the Github flavoured MD.</p>
+<ol>
+<li><p>The easiest way to get started with Cloudscribe is the <a href="https://marketplace.visualstudio.com/items?itemName=joeaudette.cloudscribeProjectTemplate">Visual Studio project template available from the VS Marketplace</a>.</p>
+<p>This install uses a simple Single Tenant, NoDb configuration, and the Simple Content module is not included.</p>
+</li>
+<li><p>Update the NuGet packages, and build</p>
+</li>
+<li><p>I suppose you've got npm installed; I have now added a package.json to get @aspnet-signalr (essentially the client), gulp to copy those from ./node-modules to wwwroot/lib, and pnotify, a fantastic notification library, and grunt for copying the stuff over to wwwroot</p>
+</li>
+<li><p>Your Task Runner explorer should now list the various Copy* tasks and execute them after build. There's probably a better way to do that, your mileage may vary.</p>
+</li>
+<li><p>I'm now adding two SignalR Hub Endpoints, for simplicity I'll add them to the Controller folder but they shouldn't necessarily be there. Both derive from SignalR.Hub</p>
+</li>
+</ol>
+<ul>
+<li>SignalRHeartbeat contains method &quot;Heartbeat&quot;, which sends the current datetime to the client, and HeartBeatTock which accepts a message from the client to allow it to check if it is still connected. It does not require authentication, and is used for connection handling, reconnecting etc. We'll wire this up later.</li>
+<li>SignalRHub; which will be our main hub later, and which is decorated with <code>[Authorize]</code>. It overrides Hub.OnConnected in order to create a group with the user's Guid as group name, so we can resolve this in an injected HubContext from a Controller later; the user is the lone member of that group. It also sends the Guid to the client for local caching, which allows the client to listen or to ignore particular messages - no point in sending a notification to the person who's actioned something; he's just done it and will know, right?</li>
+</ul>
+<ol start="6">
+<li><p>Now SignalR needs to be added to the pipeline. In startup.cs, add to <code>public void ConfigureServices(IServiceCollection services)</code>: <code>services.AddSignalR();</code></p>
+</li>
+<li><p>We can now configure our endpoints in startup.cs' <code>Configure</code>. The order of the middleware is important (thank you @joeaudette to help me figure this out!), so in order for ´[Authorize]´ to work make sure to add the Hubs <strong>after</strong> <code>app.UseCloudscribeCore()</code>:</p>
+</li>
+</ol>
+<pre><code class="language-csharp">    app.UseSignalR(routes =&gt;
+    {
+        routes.MapHub&lt;SignalRHeartbeat&gt;(&quot;/heartbeat&quot;);
+        routes.MapHub&lt;SignalRHub&gt;(&quot;/signalr&quot;);
+    });
+</code></pre>
+<p>Make sure that the URLs do not conflict with any existing controllers or routes that come after this.</p>
+<ol start="8">
+<li><p>Build and run - if you are me, it will not work: <em>Application startup exception: System.InvalidOperationException: Unable to find the SignalR service. Please add it by calling 'IServiceCollection.AddSignalR()'.</em>
+Just to make you a part of my life: I have typed the code in 6) above, but only in this Readme. This is a good time to test if my stuff is copy&amp;paste capable. And to go get another cup of coffee.</p>
+</li>
+<li><p>With sufficient levels of caffeine, you can now test the basic implementation. Navigate to yourUrl/heartbeat - you should get an empty page stating &quot;Connection ID required&quot;. Navigate to /signalr and you should be redirect to the login page. So far, so good. Let's wire the client before whilst the kettle boils my next cup.</p>
+</li>
+<li><p>Now we'll need the javascript client file - and we can add pnotify in the same step since we'll need it later anyway. Add pnotify.css and .js; and signalr.js to the bundleconfig.json and for dev in _Layout.cshtml. A quick check in the browser's console reveals that PNotify and signalR are now defined.</p>
+</li>
+</ol>
+<h3 id="heartbeat-hub">Heartbeat Hub</h3>
+<ol start="11">
+<li>The &quot;heartbeat&quot; hub is trying to showcase periodic information sent to the client; be it a particular update, weather report or, god forbid, a new advert - or whatnot. In any case, it should illustrate my thinking for reconnection of a broken hub (server crashed, browser's host computer went to sleep and woke back up, etc...)</li>
+</ol>
+<ul>
+<li>in my example, I have wired this into the _Layout file <em>below</em> RenderScripts as a partial (<code>@await Html.PartialAsync(&quot;_signalRHHeartbeat&quot;)</code>), see Views/Shared/_signalRHeartbeat.cshtml</li>
+<li>the javascript should be reasonably well documented, but here are the basics:
+<ul>
+<li>I call <code>registerSignalRHeartbeat()</code>. If no connection previously exists, it will start a connection (beware that Websockets don't appear to work behind IISExpress on localhost, therefore I use Server Sent Events as transport - you may want to change that to websockets for production)</li>
+<li>Once a connection is established, I register a <code>heartBeatTockTimer</code> (using setInterval). This will periodically send the HeartbeatTock to the server - whenever a call fails, it will call <code>registerSignalRHeartbeat()</code>, which if a connection exists will try to close it properly or, failing that, dispose of it, and try to re-establish the connection for the configured number of retries. After which it ungracefully throws an exception.</li>
+<li>There are probably way better methods to do that, and the most recent version of signalR probably handles some stuff themselves, but I found this approach to be reliable enough to survive a number of cases, including putting my computer to sleep and continuing where I left of the next morning</li>
+<li>Check the browser's console to see some trace messages from that code</li>
+</ul>
+</li>
+</ul>
+<h3 id="notification-hub">Notification Hub</h3>
+<ol start="12">
+<li>There is one major difference in the notification hub: It requires Authorization, you'll no doubt spot the <code>[Authorize]</code> on the class.</li>
+</ol>
+<ul>
+<li>this allows us to override OnConnectedAsync() and store the user ID as a group. From outside the hub itself, e.g. when injected to a controller through HubContext, Clients.Caller is not available. However, Clients.Group(theUserGuid) is. That will come in handy a little later.</li>
+<li>There are more ways to track connections across servers etc, e.g. by deriving from HubWithPresence, but I haven't played with that yet.</li>
+<li>The <code>Identification()</code> method sends the user's Guid back to the browser, so that we can access that later to choose if we want to display or ignore certain messages sent to &quot;All&quot;</li>
+<li>To demonstrate, I have decorated the About() method in the Home Controller with Authorize, and we'll wire the JS directly into the view's scripts section. We could obviously re-use the connection handling stuff, but to keep it simple I'll just wire up a basic hub connection in Views/Home/About.cshtml</li>
+<li>might be a good time to get another coffee and commit what we have so far.</li>
+</ul>
 
-        </section>
 
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.1/bootstrap.min.js"></script>
-    
 </body>
 </html>
