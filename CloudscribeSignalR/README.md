@@ -7,7 +7,7 @@ Playground for the amazing .NET Core Cloudscribe project template; today: integr
   - https://www.cloudscribe.com/
 - SignalR 
   - https://github.com/aspnet/SignalR
-  - 
+
 ## Purpose
 I found it relatively hard to get started with the all-new .Net Core vanilla-js SignalR library (beginner in C# and generally amateur programmer), but have to say the guys over at https://github.com/aspnet/SignalR have done such an amazing job that it was worth the effort.
 
@@ -68,5 +68,5 @@ Just to make you a part of my life: I have typed the code in 6) above, but only 
  - navigate to /Home/about. You should get an Auth Challenge; login as admin@admin.com / admin
  - Looking at the browser's console, we should see both heartbeat and signalr endpoint connecting. 
  - You'll find a few buttons there, which in text and code should be self-explanatory.
- - Towards Monday 13/04/18 I'll try to add a confirmation dialogue and a few other bits and pieces. So much for now; feel free to file issues if I wasn't clear or if you've got way more brilliant solutions to achieve the same.
+ - Towards Monday 23/04/18 I'll try to add a confirmation dialogue and a few other bits and pieces. So much for now; feel free to file issues if I wasn't clear or if you've got way more brilliant solutions to achieve the same.
  - I haven't bothered with any programming principles here (the main reason being that I'm an amateur programmer anyway, and if ok in PHP I'm at the very beginner's level in C#/Core), so copy&paste and quick and dirty it is all the way. There should be something left for you to do, but please feel free to contribute. 
