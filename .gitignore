@@ -259,6 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/CloudscribeSignalR/dp_keys/key-a41d3343-fcb9-4f9b-b31c-c58c1aacb639.xml
+**/dp_keys/**
 /CloudscribeSignalR/nodb_storage/projects
 /CloudscribeSignalR/wwwroot/lib
+
+
