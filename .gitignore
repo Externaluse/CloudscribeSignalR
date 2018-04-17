@@ -262,3 +262,5 @@ __pycache__/
 **/dp_keys/**
 /CloudscribeSignalR/nodb_storage/projects
 /CloudscribeSignalR/wwwroot/lib
+CloudscribeSignalR/wwwroot/css/site.min.css
+CloudscribeSignalR/wwwroot/js/site.min.js
